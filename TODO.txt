@@ -1,0 +1,17 @@
+BUGS
+
+Always load files in UTF-8 format, for some reason no non-standard
+letters turn the DOS output to ANSI, Might need to find another way
+to send and receive events from mpv rather then only sending through DOS
+in Echo IPC. Perhaps MPVLib. Where is \.\\ anyhow??
+
+Window controls are not being changed from within Hotkeys
+These needed for the Progress/Volume bars,and the clipboard function.
+For titlebar changing.
+
+Might need another look at the launching button positioning routine.
+Mostly works, in rare cases not 100%.
+
+FEATURES
+
+Playlist editor.
