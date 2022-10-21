@@ -1,4 +1,4 @@
-﻿;@Ahk2Exe-SetMainIcon UMPVD.ico
+;@Ahk2Exe-SetMainIcon UMPVD.ico
 ;@Ahk2Exe-SetDescription Unified MPV Dashboard
 ;@Ahk2Exe-SetProductName UMPVD
 ;@Ahk2Exe-SetVersion 1.0
@@ -44,6 +44,13 @@ If (A_ScreenDPI = 168) {
 	MinH := VidH/5.475
 	FonS = s8
 }
+Else {
+	VidW := 800*1.020408163265306
+	VidH := VidW/1.375
+	MinW := VidW/3
+	MinH := VidH/3.95
+	FonS = s12
+}
 
 /*
 No Clock - Just in case
@@ -57,6 +64,7 @@ Gui, Margin, 0,0
 Gui, Color, c350035
 Gui, Add, Groupbox
 Gui, Show, x%A_ScreenWidth% w%VidW% h%VidH%
+;Gui, Show, x1080 w800 h600
 GuiControl, Disable, A
 Gui, +MinSize%MinW%x%MinH% +HwndUDID +Resize -DPIScale
 ControlGet, Glue, Hwnd,, Button1, %A_ScriptName%
@@ -200,7 +208,7 @@ GuiDropFiles(GuiHwnd, Select, Glue, X, Y) {
 Return
 
 ClipRun(Type) {
-If (clipboard ~= "i)\.bmp$|\.jpg$|\.png$|\.xwm$|\.ac3$|\.a52$|\.eac3|\.mlp$|\.dts$|\.dts-hd$|\.dtshd$|\.true-hd$|\.thd$|\.truehd$|\.thd+ac3$|\.tta$|\.pcm$|\.wav$|\.aiff$|\.aif$|\.aifc$|\.amr$|\.awb$|\.au$|\.snd$|\.lpcm$|\.ape$|\.wv$|\.shn$|\.adts$|\.adt$|\.mpa$|\.m1a$|\.m2a$|\.mp1$|\.mp2$|\.mp3$|\.m4a$|\.aac$|\.flac$|\.oga$|\.ogg$|\.opus$|\.spx$|\.mka$|\.weba$|\.wma$|\.f4a$|\.ra$|\.ram$|\.3ga$|\.3ga2$|\.ay$|\.gbs$|\.gym$|\.hes$|\.kss$|\.nsf$|\.nsfe$|\.sap$|\.spc$|\.vgm$|\.vgz$|\.m3u$|\.m3u8$|\.pls$|\.cue$|\.yuv$|\.y4m$|\.m2ts$|\.m2t$|\.mts$|\.mtv$|\.ts$|\.tsv$|\.tsa$|\.tts$|\.trp$|\.mpeg$|\.mpg$|\.mpe$|\.mpeg2$|\.m1v$|\.m2v$|\.mp2v$|\.mpv$|\.mpv2$|\.mod$|\.tod$|\.vob$|\.vro$|\.evob$|\.evo$|\.mpeg4$|\.m4v$|\.mp4$|\.mp4v$|\.mpg4$|\.h264$|\.avc$|\.x264$|\.264$|\.hevc$|\.h265$|\.x265$|\.265$|\.ogv$|\.ogm$|\.ogx$|\.mkv$|\.mk3d$|\.webm$|\.avi$|\.vfw$|\.divx$|\.3iv$|\.xvid$|\.nut$|\.flic$|\.fli$|\.flc$|\.nsv$|\.gxf$|\.mxf$|\.wm$|\.wmv$|\.asf$|\.dvr-ms$|\.dvr$|\.wtv$|\.dv$|\.hdv$|\.flv$|\.f4v$|\.qt$|\.mov$|\.hdmov$|\.rm$|\.rmvb$|\.3gpp$|\.3gp$|\.3gp2$|\.3g2$|\.bik$|\.ogv$") {
+If (clipboard ~= "i)\.bmp$|\.jpg$|\.png$|\.xwm$|\.ac3$|\.a52$|\.eac3|\.mlp$|\.dts$|\.dts-hd$|\.dtshd$|\.true-hd$|\.thd$|\.truehd$|\.thd+ac3$|\.tta$|\.pcm$|\.wav$|\.aiff$|\.aif$|\.aifc$|\.amr$|\.awb$|\.au$|\.snd$|\.lpcm$|\.ape$|\.wv$|\.shn$|\.adts$|\.adt$|\.mpa$|\.m1a$|\.m2a$|\.mp1$|\.mp2$|\.mp3$|\.m4a$|\.aac$|\.flac$|\.oga$|\.ogg$|\.opus$|\.spx$|\.mka$|\.weba$|\.wma$|\.f4a$|\.ra$|\.ram$|\.3ga$|\.3ga2$|\.ay$|\.gbs$|\.gym$|\.hes$|\.kss$|\.nsf$|\.nsfe$|\.sap$|\.spc$|\.vgm$|\.vgz$|\.m3u$|\.m3u8$|\.pls$|\.cue$|\.yuv$|\.y4m$|\.m2ts$|\.m2t$|\.mts$|\.mtv$|\.ts$|\.tsv$|\.tsa$|\.tts$|\.trp$|\.mpeg$|\.mpg$|\.mpe$|\.mpeg2$|\.m1v$|\.m2v$|\.mp2v$|\.mpv$|\.mpv2$|\.mod$|\.tod$|\.vob$|\.vro$|\.evob$|\.evo$|\.mpeg4$|\.m4v$|\.mp4$|\.mp4v$|\.mpg4$|\.h264$|\.avc$|\.x264$|\.264$|\.hevc$|\.h265$|\.x265$|\.265$|\.ogv$|\.ogm$|\.ogx$|\.mkv$|\.mk3d$|\.webm$|\.avi$|\.vfw$|\.divx$|\.3iv$|\.xvid$|\.nut$|\.flic$|\.fli$|\.flc$|\.nsv$|\.gxf$|\.mxf$|\.wm$|\.wmv$|\.asf$|\.dvr-ms$|\.dvr$|\.wtv$|\.dv$|\.hdv$|\.flv$|\.f4v$|\.qt$|\.mov$|\.hdmov$|\.rm$|\.rmvb$|\.3gpp$|\.3gp$|\.3gp2$|\.3g2$|\.bik$|\.ogv$|$http*") {
 	Run, %ComSpec% /c "Echo stop > \\.\pipe\mpvpipe",, hide
 	Loop, parse, clipboard, `n, `r
 		{
@@ -212,7 +220,7 @@ If (clipboard ~= "i)\.bmp$|\.jpg$|\.png$|\.xwm$|\.ac3$|\.a52$|\.eac3|\.mlp$|\.dt
 Return
 
 Play:
-If (File ~= "i)\.bmp$|\.jpg$|\.png$|\.xwm$|\.ac3$|\.a52$|\.eac3|\.mlp$|\.dts$|\.dts-hd$|\.dtshd$|\.true-hd$|\.thd$|\.truehd$|\.thd+ac3$|\.tta$|\.pcm$|\.wav$|\.aiff$|\.aif$|\.aifc$|\.amr$|\.awb$|\.au$|\.snd$|\.lpcm$|\.ape$|\.wv$|\.shn$|\.adts$|\.adt$|\.mpa$|\.m1a$|\.m2a$|\.mp1$|\.mp2$|\.mp3$|\.m4a$|\.aac$|\.flac$|\.oga$|\.ogg$|\.opus$|\.spx$|\.mka$|\.weba$|\.wma$|\.f4a$|\.ra$|\.ram$|\.3ga$|\.3ga2$|\.ay$|\.gbs$|\.gym$|\.hes$|\.kss$|\.nsf$|\.nsfe$|\.sap$|\.spc$|\.vgm$|\.vgz$|\.m3u$|\.m3u8$|\.pls$|\.cue$|\.yuv$|\.y4m$|\.m2ts$|\.m2t$|\.mts$|\.mtv$|\.ts$|\.tsv$|\.tsa$|\.tts$|\.trp$|\.mpeg$|\.mpg$|\.mpe$|\.mpeg2$|\.m1v$|\.m2v$|\.mp2v$|\.mpv$|\.mpv2$|\.mod$|\.tod$|\.vob$|\.vro$|\.evob$|\.evo$|\.mpeg4$|\.m4v$|\.mp4$|\.mp4v$|\.mpg4$|\.h264$|\.avc$|\.x264$|\.264$|\.hevc$|\.h265$|\.x265$|\.265$|\.ogv$|\.ogm$|\.ogx$|\.mkv$|\.mk3d$|\.webm$|\.avi$|\.vfw$|\.divx$|\.3iv$|\.xvid$|\.nut$|\.flic$|\.fli$|\.flc$|\.nsv$|\.gxf$|\.mxf$|\.wm$|\.wmv$|\.asf$|\.dvr-ms$|\.dvr$|\.wtv$|\.dv$|\.hdv$|\.flv$|\.f4v$|\.qt$|\.mov$|\.hdmov$|\.rm$|\.rmvb$|\.3gpp$|\.3gp$|\.3gp2$|\.3g2$|\.bik$|\.ogv$") {
+If (File ~= "i)\.bmp$|\.jpg$|\.png$|\.xwm$|\.ac3$|\.a52$|\.eac3|\.mlp$|\.dts$|\.dts-hd$|\.dtshd$|\.true-hd$|\.thd$|\.truehd$|\.thd+ac3$|\.tta$|\.pcm$|\.wav$|\.aiff$|\.aif$|\.aifc$|\.amr$|\.awb$|\.au$|\.snd$|\.lpcm$|\.ape$|\.wv$|\.shn$|\.adts$|\.adt$|\.mpa$|\.m1a$|\.m2a$|\.mp1$|\.mp2$|\.mp3$|\.m4a$|\.aac$|\.flac$|\.oga$|\.ogg$|\.opus$|\.spx$|\.mka$|\.weba$|\.wma$|\.f4a$|\.ra$|\.ram$|\.3ga$|\.3ga2$|\.ay$|\.gbs$|\.gym$|\.hes$|\.kss$|\.nsf$|\.nsfe$|\.sap$|\.spc$|\.vgm$|\.vgz$|\.m3u$|\.m3u8$|\.pls$|\.cue$|\.yuv$|\.y4m$|\.m2ts$|\.m2t$|\.mts$|\.mtv$|\.ts$|\.tsv$|\.tsa$|\.tts$|\.trp$|\.mpeg$|\.mpg$|\.mpe$|\.mpeg2$|\.m1v$|\.m2v$|\.mp2v$|\.mpv$|\.mpv2$|\.mod$|\.tod$|\.vob$|\.vro$|\.evob$|\.evo$|\.mpeg4$|\.m4v$|\.mp4$|\.mp4v$|\.mpg4$|\.h264$|\.avc$|\.x264$|\.264$|\.hevc$|\.h265$|\.x265$|\.265$|\.ogv$|\.ogm$|\.ogx$|\.mkv$|\.mk3d$|\.webm$|\.avi$|\.vfw$|\.divx$|\.3iv$|\.xvid$|\.nut$|\.flic$|\.fli$|\.flc$|\.nsv$|\.gxf$|\.mxf$|\.wm$|\.wmv$|\.asf$|\.dvr-ms$|\.dvr$|\.wtv$|\.dv$|\.hdv$|\.flv$|\.f4v$|\.qt$|\.mov$|\.hdmov$|\.rm$|\.rmvb$|\.3gpp$|\.3gp$|\.3gp2$|\.3g2$|\.bik$|\.ogv$|$http*") {
 	WinSetTitle, ahk_id %UDID%,, UMPVD - Press F5 for Playlist
 	MP3F := File
 	Gosub,ResDim
